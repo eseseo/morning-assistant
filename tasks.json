@@ -35,7 +35,25 @@
       "priority": "medium",
       "category": "기타",
       "completed": false
+    },
+    {
+      "id": "48dd3f33",
+      "title": "4월 29일(수) 오후 2시~4시 30분 모둠의 챌린지 로봇 정부 첫 실증 행사",
+      "date": "2026-04-21",
+      "time": "14:00",
+      "priority": "medium",
+      "category": "기타",
+      "completed": false
+    },
+    {
+      "id": "0790b639",
+      "title": "이거등록",
+      "date": "2026-04-21",
+      "time": null,
+      "priority": "medium",
+      "category": "기타",
+      "completed": false
     }
   ],
-  "syncedAt": "2026-04-21T08:22:36Z"
+  "syncedAt": "2026-04-21T09:56:33Z"
 }
