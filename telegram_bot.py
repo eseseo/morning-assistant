@@ -1,21 +1,24 @@
 """
 텔레그램 양방향 봇 - GitHub Actions 폴링 방식
 tasks.json을 GitHub API로 읽고 쓰는 방식으로 동작합니다.
+이미지 처리: Claude Vision API 사용
 """
 
 import os
 import json
 import re
 import uuid
+import base64
 import requests
 from datetime import datetime, timedelta, timezone
 
 # ── 환경변수 ──────────────────────────────────────────────
-TELEGRAM_TOKEN = os.environ["TELEGRAM_TOKEN"]
-TELEGRAM_CHAT_ID = os.environ["TELEGRAM_CHAT_ID"]
-GITHUB_TOKEN = os.environ["GH_TOKEN"]
-GITHUB_REPO = os.environ["GITHUB_REPO"]           # e.g. "eseseo/morning-assistant"
-TASKS_FILE_PATH = os.environ.get("TASKS_FILE_PATH", "tasks.json")
+TELEGRAM_TOKEN    = os.environ["TELEGRAM_TOKEN"]
+TELEGRAM_CHAT_ID  = os.environ["TELEGRAM_CHAT_ID"]
+GITHUB_TOKEN      = os.environ["GH_TOKEN"]
+GITHUB_REPO       = os.environ["GITHUB_REPO"]
+ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
+TASKS_FILE_PATH   = os.environ.get("TASKS_FILE_PATH", "tasks.json")
 
 # offset를 GitHub에 저장해 폴링 중복 방지
 OFFSET_FILE_PATH = os.environ.get("OFFSET_FILE_PATH", "telegram_offset.json")
@@ -199,6 +202,58 @@ def clean_command_prefix(text: str) -> str:
     return re.sub(r"^/\S+\s*", "", text).strip()
 
 
+# ── 이미지 분석 (Claude Vision) ───────────────────────────
+def analyze_image_with_claude(file_id: str) -> str:
+    """Telegram file_id로 이미지를 받아 Claude로 분석 후 할 일 텍스트 반환."""
+    # 1. Telegram에서 파일 URL 가져오기
+    r = requests.get(f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/getFile",
+                     params={"file_id": file_id}, timeout=15)
+    r.raise_for_status()
+    file_path = r.json()["result"]["file_path"]
+    file_url  = f"https://api.telegram.org/file/bot{TELEGRAM_TOKEN}/{file_path}"
+
+    # 2. 이미지 다운로드
+    img_r = requests.get(file_url, timeout=30)
+    img_r.raise_for_status()
+    img_b64 = base64.standard_b64encode(img_r.content).decode()
+
+    # 3. Claude Vision으로 분석
+    payload = {
+        "model": "claude-haiku-4-5-20251001",
+        "max_tokens": 512,
+        "messages": [{
+            "role": "user",
+            "content": [
+                {
+                    "type": "image",
+                    "source": {"type": "base64", "media_type": "image/jpeg", "data": img_b64}
+                },
+                {
+                    "type": "text",
+                    "text": (
+                        "이 이미지에서 할 일이나 일정 관련 정보를 추출해줘. "
+                        "날짜, 시간, 내용, 마감일 등이 있으면 포함해서 "
+                        "한국어로 한 줄 요약만 해줘. 예: '4월 28일 오후 2시 파트너사 미팅'. "
+                        "할 일과 관계없는 이미지면 '관련없음'이라고만 답해."
+                    )
+                }
+            ]
+        }]
+    }
+    resp = requests.post(
+        "https://api.anthropic.com/v1/messages",
+        headers={
+            "x-api-key": ANTHROPIC_API_KEY,
+            "anthropic-version": "2023-06-01",
+            "content-type": "application/json"
+        },
+        json=payload,
+        timeout=30
+    )
+    resp.raise_for_status()
+    return resp.json()["content"][0]["text"].strip()
+
+
 # ── 메시지 핸들러 ─────────────────────────────────────────
 def handle_message(text: str, tasks_data: dict) -> str:
     """메시지를 처리하고 응답 문자열을 반환. tasks_data를 in-place로 변경."""
@@ -329,7 +384,25 @@ def main():
             print(f"허용되지 않은 채팅 ID: {chat_id}")
             continue
 
-        text = message.get("text", "").strip()
+        text  = message.get("text", "").strip()
+        photo = message.get("photo")
+
+        # 이미지 메시지 처리
+        if photo and ANTHROPIC_API_KEY:
+            print("이미지 수신, Claude Vision으로 분석 중...")
+            file_id = photo[-1]["file_id"]  # 가장 큰 해상도
+            try:
+                extracted = analyze_image_with_claude(file_id)
+                print(f"추출된 내용: {extracted}")
+                if extracted == "관련없음":
+                    tg_send("이미지에서 할 일 관련 내용을 찾지 못했어요 🤔")
+                else:
+                    text = extracted  # 추출된 텍스트를 일반 메시지처럼 처리
+            except Exception as e:
+                print(f"이미지 분석 실패: {e}")
+                tg_send("이미지 분석 중 오류가 발생했어요 😢")
+                continue
+
         if not text:
             continue
 
