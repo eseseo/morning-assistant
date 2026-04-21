@@ -12,10 +12,18 @@ from datetime import datetime
 
 import os
 
-# GitHub Actions에서는 Secrets로, 로컬에서는 직접 값 사용
-BOT_TOKEN  = os.environ.get("BOT_TOKEN",  "8626100506:AAHDbxZy852sO2g4Z9olAqyurkIlue4gQwA")
-CHAT_ID    = os.environ.get("CHAT_ID",    "1824348185")
-TASKS_FILE = os.environ.get("TASKS_FILE", "/Users/jy/Documents/Claude/Projects/개인비서/tasks.json")
+# .env 파일 로드 (로컬 테스트용)
+_env_path = os.path.join(os.path.dirname(__file__), ".env")
+if os.path.exists(_env_path):
+    for line in open(_env_path):
+        line = line.strip()
+        if line and not line.startswith("#") and "=" in line:
+            k, v = line.split("=", 1)
+            os.environ.setdefault(k.strip(), v.strip())
+
+BOT_TOKEN  = os.environ["BOT_TOKEN"]
+CHAT_ID    = os.environ["CHAT_ID"]
+TASKS_FILE = os.environ.get("TASKS_FILE", os.path.expanduser("~/Documents/Claude/Projects/개인비서/tasks.json"))
 
 PRIORITY_EMOJI = {"high": "🔴", "medium": "🟡", "low": "🔵"}
 WEEKDAYS = ["월", "화", "수", "목", "금", "토", "일"]

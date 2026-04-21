@@ -1,0 +1,6 @@
+.env
+*.sh
+__pycache__/
+*.pyc
+alert.log
+telegram_offset.json
