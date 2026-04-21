@@ -1,0 +1,23 @@
+{
+  "tasks": [
+    {
+      "id": "grant-keit-standard-tech-2nd-2026",
+      "title": "\ud83d\udccb [D-1] KEIT \uad6d\uac00\ud45c\uc900\uae30\uc220\ub825\ud5a5\uc0c1\uc0ac\uc5c5 \uc81c2\ucc28 \uae30\uc220\uc218\uc694\uc870\uc0ac \uacf5\uace0 \ud655\uc778",
+      "date": "2026-04-16",
+      "time": null,
+      "priority": "high",
+      "category": "\uacfc\uc81c",
+      "completed": false
+    },
+    {
+      "id": "grant-ai-product-commercialize-2026",
+      "title": "\ud83d\udccb [D-5] AI \uc751\uc6a9\uc81c\ud488 \uc2e0\uc18d \uc0c1\uc6a9\ud654 \uc9c0\uc6d0\uc0ac\uc5c5 \uacf5\uace0 \ud655\uc778",
+      "date": "2026-04-20",
+      "time": null,
+      "priority": "high",
+      "category": "\uacfc\uc81c",
+      "completed": false
+    }
+  ],
+  "syncedAt": "2026-04-15T02:07:00Z"
+}
