@@ -39,11 +39,34 @@ def send_telegram(text: str):
         return json.loads(r.read())
 
 
+def get_slot(hour: int):
+    """시간대에 따라 인사말/이모지/멘트 결정"""
+    if 5 <= hour < 11:
+        return {
+            "emoji": "🌅",
+            "greeting": "좋은 아침, 지영씨! 🤘",
+            "closing": "💪 <b>오늘도 화이팅!</b>",
+        }
+    elif 11 <= hour < 17:
+        return {
+            "emoji": "☀️",
+            "greeting": "점심 먹었어요, 지영씨? 🍚",
+            "closing": "☕ <b>오후도 무리 말고 차근차근!</b>",
+        }
+    else:
+        return {
+            "emoji": "🌙",
+            "greeting": "수고 많았어요, 지영씨 ✨",
+            "closing": "🛏️ <b>푹 쉬고 내일도 화이팅!</b>",
+        }
+
+
 def main():
     now      = datetime.now()
     today    = now.strftime("%Y-%m-%d")
     date_str = now.strftime("%Y년 %m월 %d일")
     day_str  = WEEKDAYS[now.weekday()]
+    slot     = get_slot(now.hour)
 
     # tasks.json 읽기
     today_tasks = []
@@ -60,7 +83,7 @@ def main():
 
     # 메시지 구성
     lines = [
-        f"🌅 <b>좋은 아침, 지영씨! 🤘</b>",
+        f"{slot['emoji']} <b>{slot['greeting']}</b>",
         f"",
         f"📅 {date_str} ({day_str})",
         f"",
@@ -82,7 +105,7 @@ def main():
             "앱에서 추가해보세요.",
         ]
 
-    lines += ["", "💪 <b>오늘도 화이팅!</b>", "", "📱 <a href=\"https://eseseo.github.io/morning-assistant\">할 일 앱 열기</a>"]
+    lines += ["", slot["closing"], "", "📱 <a href=\"https://eseseo.github.io/morning-assistant\">할 일 앱 열기</a>"]
     message = "\n".join(lines)
 
     result = send_telegram(message)
