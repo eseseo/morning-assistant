@@ -409,9 +409,11 @@ def main():
         print(f"메시지 수신: {text}")
 
         # 메시지 처리
+        before_snapshot = json.dumps(tasks_data, ensure_ascii=False, sort_keys=True)
         response = handle_message(text, tasks_data)
         tg_send(response)
-        tasks_changed = True
+        if json.dumps(tasks_data, ensure_ascii=False, sort_keys=True) != before_snapshot:
+            tasks_changed = True
 
     # tasks.json 저장 (변경된 경우)
     if tasks_changed:

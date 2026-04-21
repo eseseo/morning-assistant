@@ -10,8 +10,6 @@ import urllib.request
 import urllib.parse
 from datetime import datetime
 
-import os
-
 # .env 파일 로드 (로컬 테스트용)
 _env_path = os.path.join(os.path.dirname(__file__), ".env")
 if os.path.exists(_env_path):
