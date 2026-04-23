@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 
 /* ─────────────────────────────────────────
    상수 & 유틸
@@ -141,6 +141,10 @@ export default function App() {
   const [ghStatus,   setGhStatus]     = useState("idle"); // idle | syncing | ok | err
   const [showGhForm, setShowGhForm]   = useState(false);
 
+  /* 자동 동기화용 refs */
+  const isInitialMount = useRef(true);
+  const syncTimerRef   = useRef(null);
+
   /* 시계 */
   useEffect(() => {
     const t = setInterval(() => setNow(fmtTime()), 30000);
@@ -191,7 +195,36 @@ export default function App() {
     } catch {}
   }, []);
 
-  /* GitHub 동기화 */
+  /* GitHub 자동 동기화 (debounce 1.5초) */
+  useEffect(() => {
+    // 초기 마운트 시에는 동기화 안 함 (로드 직후 원격 덮어쓰기 방지)
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
+    }
+    // 토큰/repo 미설정이면 skip
+    if (!ghToken || !ghRepo) return;
+
+    // 이전 타이머 취소하고 새로 예약
+    if (syncTimerRef.current) clearTimeout(syncTimerRef.current);
+    syncTimerRef.current = setTimeout(async () => {
+      setGhStatus("syncing");
+      try {
+        await syncToGitHub(tasks, ghToken, ghRepo);
+        setGhStatus("ok");
+        setTimeout(() => setGhStatus("idle"), 2000);
+      } catch {
+        setGhStatus("err");
+        setTimeout(() => setGhStatus("idle"), 4000);
+      }
+    }, 1500);
+
+    return () => {
+      if (syncTimerRef.current) clearTimeout(syncTimerRef.current);
+    };
+  }, [tasks, ghToken, ghRepo]);
+
+  /* GitHub 수동 동기화 (버튼용) */
   const handleGhSync = useCallback(async () => {
     if (!ghToken || !ghRepo) { setShowGhForm(true); return; }
     setGhStatus("syncing");
@@ -278,7 +311,7 @@ export default function App() {
       <header style={S.header}>
         <div style={S.hTop}>
           <div>
-            <div style={S.brand}>총사령관님 🤘</div>
+            <div style={S.brand}>슈퍼대장님 🤘</div>
             <div style={S.dateStr}>{fmtFull()}</div>
           </div>
           <div style={S.clock}>{now}</div>
@@ -451,10 +484,11 @@ export default function App() {
                        : "#00e67644",
           }}
         >
-          {ghStatus === "syncing" ? "⏳ 동기화 중..."
-         : ghStatus === "ok"      ? "✅ GitHub 완료!"
+          {ghStatus === "syncing" ? "⏳ 자동 동기화 중..."
+         : ghStatus === "ok"      ? "✅ 동기화 완료!"
          : ghStatus === "err"     ? "❌ 동기화 실패"
-         : "🐙 GitHub 동기화"}
+         : (ghToken && ghRepo)    ? "🐙 자동 동기화 ON"
+         : "🐙 GitHub 설정"}
         </button>
         <button onClick={exportJSON} style={S.exportBtn}>📤 내보내기</button>
         <span style={{ color: "#2a2a2a", fontSize: 11, marginLeft: "auto" }}>{tasks.length}개</span>

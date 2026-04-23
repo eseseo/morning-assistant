@@ -44,19 +44,19 @@ def get_slot(hour: int):
     if 5 <= hour < 11:
         return {
             "emoji": "🌅",
-            "greeting": "좋은 아침, 지영씨! 🤘",
+            "greeting": "좋은 아침, 슈퍼대장님! 🤘",
             "closing": "💪 <b>오늘도 화이팅!</b>",
         }
     elif 11 <= hour < 17:
         return {
             "emoji": "☀️",
-            "greeting": "점심 먹었어요, 지영씨? 🍚",
+            "greeting": "점심 드셨어요, 슈퍼대장님? 🍚",
             "closing": "☕ <b>오후도 무리 말고 차근차근!</b>",
         }
     else:
         return {
             "emoji": "🌙",
-            "greeting": "수고 많았어요, 지영씨 ✨",
+            "greeting": "수고 많으셨어요, 슈퍼대장님 ✨",
             "closing": "🛏️ <b>푹 쉬고 내일도 화이팅!</b>",
         }
 
