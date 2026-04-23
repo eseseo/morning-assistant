@@ -62,7 +62,25 @@
       "priority": "medium",
       "category": "기타",
       "completed": false
+    },
+    {
+      "id": "c7d24342",
+      "title": "✅ 할 일이 추가되었습니다!\n\n🟡 4월 29일(수) 오후 2시~4시 30분 모둠의 챌린지 로봇 정부 첫 실증 행사\n📅 2026-04-21 14:00\n🏷️ 기타 | 우선순위: medium\n\n이건 왜 안보여?",
+      "date": "2026-04-21",
+      "time": "14:00",
+      "priority": "medium",
+      "category": "기타",
+      "completed": false
+    },
+    {
+      "id": "5d3aa02b",
+      "title": "알람이랑 웹페이지랑 연동이 안되는거 같은데?",
+      "date": "2026-04-23",
+      "time": null,
+      "priority": "medium",
+      "category": "기타",
+      "completed": false
     }
   ],
-  "syncedAt": "2026-04-22T14:21:58Z"
+  "syncedAt": "2026-04-23T07:47:49Z"
 }
