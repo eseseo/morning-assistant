@@ -5,21 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="theme-color" content="#f8f7ff" />
-  <title>총사령관님 🤘</title>
+  <meta name="theme-color" content="#f4f7e8" />
+  <title>슈퍼대장님 🤘</title>
   <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { background: #f0eeff; }
+    body { background: #f4f7e8; }
     input, select, textarea, button { font-family: 'Courier New', Courier, monospace; }
     input[type="date"]::-webkit-calendar-picker-indicator,
     input[type="time"]::-webkit-calendar-picker-indicator { filter: none; opacity: 0.5; }
     select option { background: #ffffff; color: #1f1f2e; }
     ::-webkit-scrollbar { width: 4px; }
-    ::-webkit-scrollbar-track { background: #f0eeff; }
-    ::-webkit-scrollbar-thumb { background: #c4b5fd; border-radius: 2px; }
+    ::-webkit-scrollbar-track { background: #f4f7e8; }
+    ::-webkit-scrollbar-thumb { background: #a7c957; border-radius: 2px; }
   </style>
 </head>
 <body>
@@ -163,13 +163,13 @@
           <header style={S.header}>
             <div style={S.hTop}>
               <div>
-                <div style={S.brand}>총사령관님 🤘</div>
+                <div style={S.brand}>슈퍼대장님 🤘</div>
                 <div style={S.dateStr}>{fmtFull()}</div>
               </div>
               <div style={S.clock}>{now}</div>
             </div>
             <div style={S.stats}>
-              {[{ n: todayT.length, label: "오늘", color: "#7c3aed" }, { n: allT.length, label: "전체", color: "#6366f1" }, { n: doneT.length, label: "완료", color: "#10b981" }].map(({ n, label, color }) => (
+              {[{ n: todayT.length, label: "오늘", color: "#166534" }, { n: allT.length, label: "전체", color: "#4d7c0f" }, { n: doneT.length, label: "완료", color: "#10b981" }].map(({ n, label, color }) => (
                 <div key={label} style={S.stat}>
                   <span style={{ color: "#ffffff", fontSize: 26, fontWeight: 900, lineHeight: 1 }}>{n}</span>
                   <span style={{ color: "rgba(255,255,255,.7)", fontSize: 11, marginTop: 2 }}>{label}</span>
@@ -234,7 +234,7 @@
           {showGhForm && (
             <div style={S.modal}>
               <div style={S.modalBox}>
-                <div style={{ color: "#7c3aed", fontWeight: 900, marginBottom: 12, fontSize: 15 }}>🐙 GitHub 설정</div>
+                <div style={{ color: "#166534", fontWeight: 900, marginBottom: 12, fontSize: 15 }}>🐙 GitHub 설정</div>
                 <input style={{ ...S.inp, marginBottom: 8 }} placeholder="Personal Access Token" type="password" value={ghToken} onChange={(e) => setGhToken(e.target.value)} />
                 <input style={{ ...S.inp, marginBottom: 12 }} placeholder="username/repo-name" value={ghRepo} onChange={(e) => setGhRepo(e.target.value)} />
                 <div style={{ display: "flex", gap: 8 }}>
@@ -274,7 +274,7 @@
                 {overdue && <span style={{ color: "#ef4444" }}>⚠ 기한 초과 · </span>}
                 {task.date && fmtDate(task.date)}
                 {task.time && ` ${task.time}`}
-                {task.category && <span style={{ marginLeft: 8, color: "#7c3aed" }}>#{task.category}</span>}
+                {task.category && <span style={{ marginLeft: 8, color: "#166534" }}>#{task.category}</span>}
                 <span style={{ marginLeft: 8, color: p.color, fontSize: 10 }}>{p.label}</span>
               </div>
               {task.notes && <div style={S.notes}>{task.notes}</div>}
@@ -294,8 +294,8 @@
     }
 
     const S = {
-      wrap:     { minHeight: "100vh", background: "#f0eeff", color: "#1f1f2e", fontFamily: "'Courier New', Courier, monospace", maxWidth: 480, margin: "0 auto" },
-      header:   { padding: "24px 20px 14px", background: "linear-gradient(180deg,#7c3aed 0%,#6366f1 100%)", borderBottom: "none" },
+      wrap:     { minHeight: "100vh", background: "#f4f7e8", color: "#1f1f2e", fontFamily: "'Courier New', Courier, monospace", maxWidth: 480, margin: "0 auto" },
+      header:   { padding: "24px 20px 14px", background: "linear-gradient(180deg,#166534 0%,#4d7c0f 100%)", borderBottom: "none" },
       hTop:     { display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 16 },
       brand:    { fontSize: 22, fontWeight: 900, color: "#ffffff", letterSpacing: "-0.5px", textShadow: "0 2px 8px rgba(0,0,0,.2)" },
       dateStr:  { fontSize: 12, color: "rgba(255,255,255,.7)", marginTop: 4 },
@@ -304,12 +304,12 @@
       stat:     { flex: 1, background: "rgba(255,255,255,.2)", border: "1px solid rgba(255,255,255,.25)", borderRadius: 8, padding: "10px 0", display: "flex", flexDirection: "column", alignItems: "center" },
       nav:      { display: "flex", borderBottom: "1px solid #e5e7eb", background: "#ffffff" },
       navBtn:   { flex: 1, padding: "13px 8px", background: "transparent", border: "none", color: "#9ca3af", fontSize: 13, cursor: "pointer", fontFamily: "inherit" },
-      navActive:{ color: "#7c3aed", borderBottom: "2px solid #7c3aed", background: "rgba(124,58,237,.04)" },
+      navActive:{ color: "#166534", borderBottom: "2px solid #166534", background: "rgba(22,101,52,.04)" },
       main:     { padding: "14px 16px 20px" },
-      addBtn:   { width: "100%", padding: 12, marginBottom: 10, background: "transparent", border: "1.5px dashed #c4b5fd", borderRadius: 8, color: "#7c3aed", fontSize: 14, cursor: "pointer", fontFamily: "inherit", letterSpacing: ".5px" },
-      form:     { background: "#ffffff", border: "1px solid #e5e7eb", borderRadius: 12, padding: 14, marginBottom: 14, display: "flex", flexDirection: "column", gap: 8, boxShadow: "0 2px 12px rgba(124,58,237,.08)" },
+      addBtn:   { width: "100%", padding: 12, marginBottom: 10, background: "transparent", border: "1.5px dashed #a7c957", borderRadius: 8, color: "#166534", fontSize: 14, cursor: "pointer", fontFamily: "inherit", letterSpacing: ".5px" },
+      form:     { background: "#ffffff", border: "1px solid #e5e7eb", borderRadius: 12, padding: 14, marginBottom: 14, display: "flex", flexDirection: "column", gap: 8, boxShadow: "0 2px 12px rgba(22,101,52,.08)" },
       inp:      { background: "#f9fafb", border: "1px solid #e5e7eb", borderRadius: 6, padding: "10px 12px", color: "#1f1f2e", fontSize: 14, fontFamily: "inherit", outline: "none", width: "100%", boxSizing: "border-box" },
-      submitBtn:{ padding: 12, background: "#7c3aed", border: "none", borderRadius: 8, color: "#ffffff", fontSize: 14, fontWeight: 700, cursor: "pointer", fontFamily: "inherit", letterSpacing: ".5px" },
+      submitBtn:{ padding: 12, background: "#166534", border: "none", borderRadius: 8, color: "#ffffff", fontSize: 14, fontWeight: 700, cursor: "pointer", fontFamily: "inherit", letterSpacing: ".5px" },
       dateGroup:{ fontSize: 11, color: "#9ca3af", letterSpacing: ".5px", textTransform: "uppercase", marginBottom: 6, paddingLeft: 2 },
       card:     { background: "#ffffff", borderRadius: 10, padding: "13px 13px", marginBottom: 8, boxShadow: "0 1px 6px rgba(0,0,0,.06)" },
       title:    { fontSize: 15, fontWeight: 600, lineHeight: 1.35 },
