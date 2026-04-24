@@ -55,6 +55,18 @@
       return true;
     }
 
+    async function fetchFromGitHub(token, repo) {
+      const path    = "tasks.json";
+      const apiBase = `https://api.github.com/repos/${repo}/contents/${path}`;
+      const headers = { Authorization: `token ${token}` };
+      const r = await fetch(apiBase, { headers });
+      if (!r.ok) throw new Error(`GitHub API ${r.status}`);
+      const data    = await r.json();
+      const decoded = decodeURIComponent(escape(atob(data.content.replace(/\n/g, ""))));
+      const parsed  = JSON.parse(decoded);
+      return Array.isArray(parsed) ? parsed : (parsed.tasks || []);
+    }
+
     const todayStr = () => new Date().toISOString().split("T")[0];
     const fmtDate  = (s) => {
       if (!s) return "";
@@ -95,11 +107,34 @@
         localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
       }, [tasks]);
 
+      // 앱 시작 시 GitHub에서 최신 tasks.json 가져오기 (텔레그램 봇이 추가한 것도 반영)
+      const skipNextAutoSync = React.useRef(false);
+      const didInitialPull   = React.useRef(false);
+      useEffect(() => {
+        if (didInitialPull.current) return;
+        didInitialPull.current = true;
+        if (!ghToken || !ghRepo) return;
+        (async () => {
+          setGhStatus("syncing");
+          try {
+            const remote = await fetchFromGitHub(ghToken, ghRepo);
+            skipNextAutoSync.current = true;
+            setTasks(remote);
+            setGhStatus("ok");
+            setTimeout(() => setGhStatus("idle"), 2000);
+          } catch {
+            setGhStatus("err");
+            setTimeout(() => setGhStatus("idle"), 3000);
+          }
+        })();
+      }, [ghToken, ghRepo]);
+
       // 할 일 변경 시 자동 GitHub 동기화 (토큰/레포 설정된 경우)
       const autoSyncTimer = React.useRef(null);
       const isFirstRender = React.useRef(true);
       useEffect(() => {
         if (isFirstRender.current) { isFirstRender.current = false; return; }
+        if (skipNextAutoSync.current) { skipNextAutoSync.current = false; return; }
         if (!ghToken || !ghRepo) return;
         if (autoSyncTimer.current) clearTimeout(autoSyncTimer.current);
         autoSyncTimer.current = setTimeout(async () => {
