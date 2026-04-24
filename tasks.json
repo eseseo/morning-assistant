@@ -21,7 +21,18 @@
       "notes": "선정릉",
       "completed": false,
       "createdAt": "2026-04-21T06:06:19.372Z"
+    },
+    {
+      "id": "d3c2aa0c",
+      "title": "다음주 월요일 안상민 저녁",
+      "date": "2026-04-27",
+      "time": null,
+      "priority": "medium",
+      "category": "기타",
+      "notes": "",
+      "completed": false,
+      "createdAt": "2026-04-22T00:00:00.000Z"
     }
   ],
-  "syncedAt": "2026-04-24T11:00:00.371Z"
+  "syncedAt": "2026-04-24T15:30:01.876039Z"
 }
