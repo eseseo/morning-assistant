@@ -1,86 +1,38 @@
 {
   "tasks": [
     {
-      "id": "grant-keit-standard-tech-2nd-2026",
-      "title": "📋 [D-1] KEIT 국가표준기술력향상사업 제2차 기술수요조사 공고 확인",
-      "date": "2026-04-16",
-      "time": null,
-      "priority": "high",
-      "category": "과제",
-      "completed": false
-    },
-    {
-      "id": "grant-ai-product-commercialize-2026",
-      "title": "📋 [D-5] AI 응용제품 신속 상용화 지원사업 공고 확인",
-      "date": "2026-04-20",
-      "time": null,
-      "priority": "high",
-      "category": "과제",
-      "completed": false
-    },
-    {
-      "id": "ec202c16",
-      "title": "내일 오후 AI미팅",
-      "date": "2026-04-22",
-      "time": null,
+      "id": "2h1vs0lr",
+      "title": "LG전자 제출",
+      "date": "2026-04-10",
+      "time": "21:41",
       "priority": "medium",
-      "category": "미팅",
-      "completed": false
+      "category": "업무",
+      "notes": "",
+      "completed": false,
+      "createdAt": "2026-04-07T12:41:46.208Z"
     },
     {
-      "id": "aaf4707c",
-      "title": "못하냐",
-      "date": "2026-04-21",
-      "time": null,
+      "id": "o46465xr",
+      "title": "SafetyAI",
+      "date": "2026-04-12",
+      "time": "21:42",
       "priority": "medium",
-      "category": "기타",
-      "completed": false
+      "category": "업무",
+      "notes": "완성도 높이기",
+      "completed": false,
+      "createdAt": "2026-04-07T12:42:23.244Z"
     },
     {
-      "id": "48dd3f33",
-      "title": "4월 29일(수) 오후 2시~4시 30분 모둠의 챌린지 로봇 정부 첫 실증 행사",
-      "date": "2026-04-21",
+      "id": "75gtd435",
+      "title": "공공기간 프로젝트 공개",
+      "date": "2026-04-29",
       "time": "14:00",
-      "priority": "medium",
-      "category": "기타",
-      "completed": false
-    },
-    {
-      "id": "0790b639",
-      "title": "이거등록",
-      "date": "2026-04-21",
-      "time": null,
-      "priority": "medium",
-      "category": "기타",
-      "completed": false
-    },
-    {
-      "id": "d3c2aa0c",
-      "title": "다음주 월요일 안상민 저녁",
-      "date": "2026-04-27",
-      "time": null,
-      "priority": "medium",
-      "category": "기타",
-      "completed": false
-    },
-    {
-      "id": "c7d24342",
-      "title": "✅ 할 일이 추가되었습니다!\n\n🟡 4월 29일(수) 오후 2시~4시 30분 모둠의 챌린지 로봇 정부 첫 실증 행사\n📅 2026-04-21 14:00\n🏷️ 기타 | 우선순위: medium\n\n이건 왜 안보여?",
-      "date": "2026-04-21",
-      "time": "14:00",
-      "priority": "medium",
-      "category": "기타",
-      "completed": false
-    },
-    {
-      "id": "5d3aa02b",
-      "title": "알람이랑 웹페이지랑 연동이 안되는거 같은데?",
-      "date": "2026-04-23",
-      "time": null,
-      "priority": "medium",
-      "category": "기타",
-      "completed": false
+      "priority": "high",
+      "category": "업무",
+      "notes": "선정릉",
+      "completed": false,
+      "createdAt": "2026-04-21T06:06:19.372Z"
     }
   ],
-  "syncedAt": "2026-04-23T07:47:49Z"
+  "syncedAt": "2026-04-24T09:44:18.019Z"
 }
