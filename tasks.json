@@ -1,17 +1,6 @@
 {
   "tasks": [
     {
-      "id": "2h1vs0lr",
-      "title": "LG전자 제출",
-      "date": "2026-04-10",
-      "time": "21:41",
-      "priority": "medium",
-      "category": "업무",
-      "notes": "",
-      "completed": false,
-      "createdAt": "2026-04-07T12:41:46.208Z"
-    },
-    {
       "id": "o46465xr",
       "title": "SafetyAI",
       "date": "2026-04-12",
@@ -34,5 +23,5 @@
       "createdAt": "2026-04-21T06:06:19.372Z"
     }
   ],
-  "syncedAt": "2026-04-24T09:44:18.019Z"
+  "syncedAt": "2026-04-24T10:51:33.069Z"
 }
