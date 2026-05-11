@@ -65,7 +65,18 @@
       "notes": "밑업",
       "completed": false,
       "createdAt": "2026-05-10T23:39:46.136Z"
+    },
+    {
+      "id": "2flj5ojs",
+      "title": "EE펑션아키팀 팀빌딩",
+      "date": "2026-06-02",
+      "time": "11:17",
+      "priority": "medium",
+      "category": "업무",
+      "notes": "팀빌딩",
+      "completed": false,
+      "createdAt": "2026-05-11T07:17:21.647Z"
     }
   ],
-  "syncedAt": "2026-05-10T23:39:47.646Z"
+  "syncedAt": "2026-05-11T07:17:23.154Z"
 }
